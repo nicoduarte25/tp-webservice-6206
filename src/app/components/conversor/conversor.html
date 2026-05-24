@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center align-items-center py-5">
+  <div class="card border-0 shadow-lg text-white" style="background-color: #1a416a; max-width: 450px; width: 100%;">
+    
+    <div class="card-header border-0 text-center pt-4 pb-2" style="background-color: #113255;">
+      <h5 class="fw-bold m-0 text-uppercase tracking-wide">Conversor De Divisas</h5>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="mb-3">
+        <label class="form-label small fw-semibold text-white-50">Cantidad</label>
+        <input type="number" class="form-control text-end fw-bold py-2" [(ngModel)]="cantidad" placeholder="Cantidad">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-semibold text-white-50">De</label>
+        <select [(ngModel)]="monedaOrigen" class="form-select py-2">
+          @for (moneda of listaMonedas; track moneda.codigo) {
+            <option [value]="moneda.codigo">{{ moneda.nombre }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label small fw-semibold text-white-50">A</label>
+        <select [(ngModel)]="monedaDestino" class="form-select py-2">
+          @for (moneda of listaMonedas; track moneda.codigo) {
+            <option [value]="moneda.codigo">{{ moneda.nombre }}</option>
+          }
+        </select>
+      </div>
+
+      @if (errorMensaje) {
+        <div class="alert alert-danger text-center small py-2 fw-bold" role="alert">
+          {{ errorMensaje }}
+        </div>
+      }
+
+      @if (cargando) {
+        <div class="text-center my-3">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Procesando...</span>
+          </div>
+        </div>
+      }
+
+      @if (resultado !== null && !cargando) {
+        <div class="text-center p-3 mb-4 rounded" style="background-color: #113255; border: 1px solid #2a5885;">
+          <p class="text-white-50 small mb-1 fw-medium">{{ cantidad }} {{ monedaOrigen }} equivalen a:</p>
+          <h2 class="text-success fw-bold my-0">
+            {{ resultado | number:'1.2-2' }} <span class="small text-white">{{ monedaDestino }}</span>
+          </h2>
+        </div>
+      }
+
+      <button (click)="ejecutarConversion()" [disabled]="cargando" class="btn btn-warning w-100 fw-bold py-2 text-dark shadow-sm">
+        {{ cargando ? 'Convirtiendo...' : 'Convertir →' }}
+      </button>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="card p-4 mx-auto" style="max-width: 550px;">
+    <h3 class="text-center mb-4">Consulta del Clima (Punto E)</h3>
+    
+    <div class="form-group mb-3">
+      <label for="ciudad" class="form-label">Nombre de la Ciudad:</label>
+      <input 
+        id="ciudad"
+        type="text" 
+        [(ngModel)]="ciudadInput" 
+        class="form-control" 
+        placeholder="Ej: Jujuy, Buenos Aires, Madrid"
+        (keyup.enter)="buscarClima()">
+    </div>
+    
+    <button 
+      (click)="buscarClima()" 
+      [disabled]="cargando" 
+      class="btn btn-primary w-100">
+      {{ cargando ? 'Buscando datos...' : 'Obtener Clima' }}
+    </button>
+
+    <div class="mt-4" *ngIf="datosClima">
+      <hr>
+      <div class="text-center bg-light p-3 rounded border">
+        <h4 class="text-capitalize text-primary mb-2">{{ datosClima.nombre }}</h4>
+        <h1 class="display-4 fw-bold mb-1">{{ datosClima.temperatura }}°C</h1>
+        <p class="text-muted text-uppercase fw-semibold">{{ datosClima.descripcion }}</p>
+      </div>
+
+      <div class="row mt-3 text-center">
+        <div class="col-6 mb-2">
+          <div class="p-2 border rounded bg-white">
+            <small class="text-muted d-block">Humedad</small>
+            <span class="fw-bold">{{ datosClima.humedad }}%</span>
+          </div>
+        </div>
+        <div class="col-6 mb-2">
+          <div class="p-2 border rounded bg-white">
+            <small class="text-muted d-block">Dirección del Viento</small>
+            <span class="fw-bold text-success">{{ datosClima.vientoDireccion }}</span> 
+            <small class="text-muted">({{ datosClima.vientoVelocidad }} km/h)</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-2 text-center">
+        <small class="text-muted">Punto Cardinal en formato de 16 puntos (ej: N=Norte, NW=Noroeste, S=Sur).</small>
+      </div>
+    </div>
+  </div>
+</div>
